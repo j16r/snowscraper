@@ -1,4 +1,4 @@
-(ns snowscrape.core
+(ns snowscraper.core
   (:require [clojure.xml :as xml]
             [clojure.zip :as zip]
             [clojurewerkz.quartzite.scheduler :as qs]
@@ -47,7 +47,7 @@
     [:meta {:http-equiv "X-UA-Compatible" :content "IE=edge,chrome=1"}]
     [:meta {:name "viewport" :content "width=device-width, initial-scale=1, maximum-scale=1"}]
     [:title "Can I board?"]
-    (include-css "/stylesheets/snowscrape.css")
+    (include-css "/stylesheets/snowscraper.css")
     [:body
      [:ol
       (map (fn [resort] [:li

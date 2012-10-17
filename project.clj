@@ -1,5 +1,5 @@
-(defproject snowscrape "1.0.0-SNAPSHOT"
-  :main snowscrape.core
+(defproject snowscraper "1.0.0-SNAPSHOT"
+  :main snowscraper.core
   :description "Scrape snow sites for relevant data"
   :dependencies [[org.clojure/clojure "1.3.0"]
                  [org.clojure/data.zip "0.1.1"]

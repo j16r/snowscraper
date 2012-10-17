@@ -1,5 +1,5 @@
-(ns snowscrape.test.core
-  (:use [snowscrape.core])
+(ns snowscraper.test.core
+  (:use [snowscraper.core])
   (:use [clojure.test]))
 
 (deftest replace-me ;; FIXME: write
