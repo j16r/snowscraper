@@ -1,0 +1,17 @@
+ol {
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  border-radius: 5px;
+  border: 1px solid #a2aeae;
+  list-style: none;
+  background: #f2dede;
+  color: #894a48;
+  margin: 5px;
+}
+
+li h3 {
+  margin: 0px;
+}
