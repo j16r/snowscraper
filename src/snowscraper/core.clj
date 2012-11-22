@@ -42,7 +42,7 @@
                   (t/start-now)
                   (t/with-schedule (schedule
                                      (repeat-forever)
-                                     (with-interval-in-milliseconds 300000))))]
+                                     (with-interval-in-milliseconds 36000000))))]
   (qs/schedule job trigger)))
 
 (defn index []
