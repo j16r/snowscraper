@@ -1,5 +1,6 @@
 (ns snowscraper.core
-  (:require [clojure.xml :as xml]
+  (:require [clojure.contrib.string :as string]
+            [clojure.xml :as xml]
             [clojure.zip :as zip]
             [clojurewerkz.quartzite.scheduler :as qs]
             [clojurewerkz.quartzite.triggers :as t]
@@ -13,17 +14,22 @@
         [clojure.data.zip.xml]
         [clojurewerkz.quartzite.schedule.simple :only [schedule repeat-forever with-interval-in-milliseconds]]))
 
-(def feed-url "http://www.onthesnow.com/new-york/snow.rss")
-
-(def feed (zip/xml-zip (xml/parse feed-url)))
-
 (def resorts (ref {}))
 
+;(def feed-url "http://www.onthesnow.com/new-york/snow.rss")
+(def feed-url "http://www.onthesnow.com/vermont/snow.rss")
+
+(defn feed [] (zip/xml-zip (xml/parse feed-url)))
+
+(defn resort-list []
+  (let [feed (feed)
+        titles (xml-> feed :channel :item :title text)
+        description (xml-> feed :channel :item :description text)]
+    (println "Loading resorts...")
+    (filter (fn [resort] (string/substring? "Open" (second resort))) (zipmap titles description))))
+
 (defjob scrape-sites [context]
-  (println "Loading resorts...")
-  (let [titles (xml-> feed :channel :item :title text)
-        opened (xml-> feed :channel :item :ots:open_staus text)]
-    (dosync (ref-set resorts (zipmap titles opened)))))
+  (dosync (ref-set resorts (resort-list))))
 
 (defn start-scraper []
   (qs/initialize)
