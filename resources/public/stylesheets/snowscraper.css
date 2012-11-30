@@ -10,6 +10,18 @@ body {
   font-family: Helvetica;
 }
 
+h1, header {
+  text-align: center;
+  color: white;
+}
+
+h1 {
+  text-shadow: 0px 2px 3px #666;
+  text-transform: uppercase;
+  font-size: 46px;
+  margin-bottom: 0.8em;
+}
+
 ol {
   margin: 0 auto;
   padding: 0;
@@ -24,12 +36,37 @@ li {
   background: white;
   color: black;
   margin: 1em;
-  padding: 1.2em;
+  padding: 1em;
   font-size: 14px;
   line-height: 20px;
 }
 
 li h3 {
   margin: 0;
-  font-size: 17.5px;
+  font-size: 19.5px;
+  display: inline-block;
+}
+
+.clear {
+  clear: both;
+}
+
+p.depth, p.snowfall {
+  font-size: 26px;
+  font-weight: bold;
+  border-radius: 6px;
+  border: 2px solid #bbb;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.067);
+  padding: 0.4em;
+  background: white;
+  float: right;
+  margin: 0.2em;
+}
+
+p.depth:after {
+  content: "\"";
+}
+
+p.snowfall:after {
+  content: "\"";
 }

@@ -26,12 +26,20 @@
 
 (defn resorts []
   (into {}
-        (map #(vector
-                (xml1-> % :title text)
-                {:title (xml1-> % :title text)
-                 :description (xml1-> % :description text)
-                 :status (xml1-> % :ots:open_staus text)})
-             (xml-> (feed) :channel :item))))
+        (let [text-node (fn [item name] (xml1-> item name text))]
+          (map #(vector
+                  (xml1-> % :title text)
+                  {:title (text-node % :title)
+                   :description (text-node % :description)
+                   :status (text-node % :ots:open_staus)
+                   :base_depth (text-node % :ots:base_depth)
+                   :snowfall_48_hour (text-node % :ots:snowfall_48hr)
+                   :region_name (text-node % :ots:region_name)
+                   :surface_conditions (text-node % :ots:surface_conditions)
+                   :base_depth_metric (text-node % :ots:base_depth_metric)
+                   :snowfall_48_hours_metric (text-node % :ots:snowfall_48hr_metric)
+                   :resort_feed (text-node % :ots:resort_css_link)})
+             (xml-> (feed) :channel :item)))))
 
 (defjob scrape-sites [context]
   (dosync (ref-set resort-list (open-resorts (resorts)))))
@@ -52,6 +60,9 @@
                                      (with-interval-in-milliseconds polling-interval))))]
   (qs/schedule job trigger)))
 
+(defn map-url [resort_name]
+  (str "https://maps.google.com/maps?q=" resort_name))
+
 (defn index []
   (println "Rendering index...")
   (html5
@@ -62,13 +73,16 @@
     [:title "Can I board?"]
     (include-css "/stylesheets/snowscraper.css")
     [:body
+     [:h1 "Can I board?"]
+     [:header "Yes! Here are some resorts near you:"]
      [:ol
       (map #(let [value (val %)
                   title (:title value)]
-              [:li
-               [:h3 title]
-               [:p (:status value)]
-               [:p (:description value)]])
+              [:li 
+               [:a {:href (map-url title)} [:h3 title]]
+               [:p {:class "depth"} (:base_depth value)]
+               [:p {:class "snowfall"} (:snowfall_48_hour value)]
+               [:div {:class "clear"}]])
            @resort-list)]]]))
 
 (defroutes routes
