@@ -31,6 +31,8 @@
 (defjob scrape-sites [context]
   (dosync (ref-set resorts (resort-list))))
 
+(def polling-interval 36000000)
+
 (defn start-scraper []
   (qs/initialize)
   (qs/start)
@@ -42,7 +44,7 @@
                   (t/start-now)
                   (t/with-schedule (schedule
                                      (repeat-forever)
-                                     (with-interval-in-milliseconds 36000000))))]
+                                     (with-interval-in-milliseconds polling-interval))))]
   (qs/schedule job trigger)))
 
 (defn index []
