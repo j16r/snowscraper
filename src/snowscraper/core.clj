@@ -14,22 +14,27 @@
         [clojure.data.zip.xml]
         [clojurewerkz.quartzite.schedule.simple :only [schedule repeat-forever with-interval-in-milliseconds]]))
 
-(def resorts (ref {}))
+(def resort-list (ref {}))
 
 ;(def feed-url "http://www.onthesnow.com/new-york/snow.rss")
 (def feed-url "http://www.onthesnow.com/vermont/snow.rss")
 
 (defn feed [] (zip/xml-zip (xml/parse feed-url)))
 
-(defn resort-list []
-  (let [feed (feed)
-        titles (xml-> feed :channel :item :title text)
-        description (xml-> feed :channel :item :description text)]
-    (println "Loading resorts...")
-    (filter (fn [resort] (string/substring? "Open" (second resort))) (zipmap titles description))))
+(defn open-resorts [resorts]
+  (filter #(-> % val :status (string/substring? "Open")) resorts))
+
+(defn resorts []
+  (into {}
+        (map #(vector
+                (xml1-> % :title text)
+                {:title (xml1-> % :title text)
+                 :description (xml1-> % :description text)
+                 :status (xml1-> % :ots:open_staus text)})
+             (xml-> (feed) :channel :item))))
 
 (defjob scrape-sites [context]
-  (dosync (ref-set resorts (resort-list))))
+  (dosync (ref-set resort-list (open-resorts (resorts)))))
 
 (def polling-interval 36000000)
 
@@ -58,10 +63,13 @@
     (include-css "/stylesheets/snowscraper.css")
     [:body
      [:ol
-      (map (fn [resort] [:li
-                         [:h3 (first resort)]
-                         [:p (second resort)]])
-           @resorts)]]]))
+      (map #(let [value (val %)
+                  title (:title value)]
+              [:li
+               [:h3 title]
+               [:p (:status value)]
+               [:p (:description value)]])
+           @resort-list)]]]))
 
 (defroutes routes
   (route/resources "/")
