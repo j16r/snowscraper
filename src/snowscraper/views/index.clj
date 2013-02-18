@@ -8,10 +8,10 @@
   (map #(let [value (val %)
               title (:title value)]
           [:li
-           [:a {:href (map-url title)} [:h3 title]]
-           [:p {:class "depth"} (:base_depth value)]
-           [:p {:class "snowfall"} (:snowfall_48_hour value)]
-           [:div {:class "clear"}]])
+           [:a {:href (map-url title)} title]
+           [:div
+            [:span {:class "depth"} (str (:base_depth value) "\"")]
+            [:span {:class "snowfall"} (str (:snowfall_48_hour value) "\"")]]])
        resorts))
 
 (defn index [resorts]
@@ -23,7 +23,5 @@
     [:title "Can I board?"]
     (include-css "/stylesheets/snowscraper.css")
     [:body
-     [:h1 "Can I board?"]
-     [:header "Yes! Here are some resorts near you:"]
      [:ol
       (draw-resorts resorts)]]]))

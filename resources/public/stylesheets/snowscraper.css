@@ -1,16 +1,10 @@
 body {
-  background: #002454;
-  background: -moz-linear-gradient(top,  #002454 1%, #008eed 59%, #89c3eb 63%, #d5ebfb 100%);
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(1%,#002454), color-stop(59%,#008eed), color-stop(63%,#89c3eb), color-stop(100%,#d5ebfb));
-  background: -webkit-linear-gradient(top,  #002454 1%,#008eed 59%,#89c3eb 63%,#d5ebfb 100%);
-  background: -o-linear-gradient(top,  #002454 1%,#008eed 59%,#89c3eb 63%,#d5ebfb 100%);
-  background: -ms-linear-gradient(top,  #002454 1%,#008eed 59%,#89c3eb 63%,#d5ebfb 100%);
-  background: linear-gradient(to bottom,  #002454 1%,#008eed 59%,#89c3eb 63%,#d5ebfb 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#002454', endColorstr='#d5ebfb',GradientType=0 );
-  font-family: Helvetica;
+  background: #aaa;
 }
 
 h1, header {
+  font-family: 'arial black';
+  font-weight: 800;
   text-align: center;
   color: white;
 }
@@ -18,7 +12,7 @@ h1, header {
 h1 {
   text-shadow: 0px 2px 3px #666;
   text-transform: uppercase;
-  font-size: 46px;
+  font-size: 36px;
   margin-bottom: 0.8em;
 }
 
@@ -29,43 +23,72 @@ ol {
 }
 
 li {
-  border-radius: 6px;
-  border: 1px solid #bbb;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.067);
+  background: #a7cfdf;
+  background: -moz-linear-gradient(-45deg,  #a7cfdf 0%, #23538a 100%);
+  background: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#a7cfdf), color-stop(100%,#23538a));
+  background: -webkit-linear-gradient(-45deg,  #a7cfdf 0%,#23538a 100%);
+  background: -o-linear-gradient(-45deg,  #a7cfdf 0%,#23538a 100%);
+  background: -ms-linear-gradient(-45deg,  #a7cfdf 0%,#23538a 100%);
+  background: linear-gradient(135deg,  #a7cfdf 0%,#23538a 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a7cfdf', endColorstr='#23538a',GradientType=1 );
+
+  -webkit-box-shadow: inset 0px 0px 2px 4px rgba(200, 200, 200, 0.1), 0px 0px 1px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0px 0px 2px 4px rgba(200, 200, 200, 0.1), 0px 0px 1px 1px rgba(0, 0, 0, 0.2);
+
+  height: 80px;
+  border: 1px solid #000;
+
   list-style: none;
-  background: white;
   color: black;
-  margin: 1em;
-  padding: 1em;
-  font-size: 14px;
-  line-height: 20px;
-}
-
-li h3 {
-  margin: 0;
-  font-size: 19.5px;
-  display: inline-block;
-}
-
-.clear {
-  clear: both;
-}
-
-p.depth, p.snowfall {
-  font-size: 26px;
-  font-weight: bold;
-  border-radius: 6px;
-  border: 1px solid #bbb;
+  margin: 6px 0;
   padding: 0.4em;
-  background: white;
-  float: right;
-  margin: 0.1em;
+
+  position: relative;
 }
 
-p.depth:after {
-  content: "\"";
+li a {
+  text-decoration: none;
+  /*text-shadow: 0px 1px 1px #fff;*/
+  font-family: 'Helvetica';
+  font-size: 1.8em;
+  font-weight: 200;
+  margin: 0.3em;
+  display: inline-block;
+  width: 200px;
+  color: #000;
 }
 
-p.snowfall:after {
-  content: "\"";
+li div {
+  font-family: 'Helvetica';
+  font-size: 26px;
+  font-weight: 200;
+  position: absolute;
+  z-index: 1;
+  bottom: 10px;
+  right: 10px;
+  overflow: hidden;
+  width: 120px;
+  padding: 0;
+  margin: 0;
+  height: 40px;
+}
+
+span {
+  width: 24px;
+}
+
+.depth:after {
+  font-size: 12px;
+  content: "Depth";
+  position: relative;
+  top: 12px;
+  left: -36px;
+}
+
+.snowfall:after {
+  font-size: 12px;
+  content: "Snowfall";
+  position: relative;
+  top: 12px;
+  left: -24px;
 }
